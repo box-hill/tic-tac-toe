@@ -74,7 +74,7 @@ const Player = (name, symbol) => {
 };
 
 
-let player1_name = prompt('Player 1 Name: ', 'Bob');
-let player2_name = prompt('Player 2 Name:', 'Jeff');
+let player1_name = prompt('Player 1 Name: ', 'Bob')||'Player 1';
+let player2_name = prompt('Player 2 Name:', 'Jeff')||'Player 2';;
 let player1 = Player(player1_name, 'O');
 let player2 = Player(player2_name, 'X');
