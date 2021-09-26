@@ -1,9 +1,7 @@
-// gameboard object
-// properties like board (array of length 9)
-
 const Gameboard = (() => {
-    let board = ['X',' ',' ',' ',' ',' ',' ',' ',' '];
-    let state = 1; // 1 = waiting on player 1 input, 2 = P2 input
+    let board = [' ',' ',' ',' ',' ',' ',' ',' ',' '];
+    let state = 1; // 1 = waiting on player 1 input, 2 = P2 input, 3 = game end
+    let winningLines = ['012','345','678','036','147','258','048','246'];
     
     const renderBoard = () => { // IIFE to render board for now
         // create the container for the board
@@ -27,12 +25,34 @@ const Gameboard = (() => {
         // get the correct square data attribute
         const squares = document.querySelectorAll('.square');
         squares.forEach(square => addEventListener('click', updateBoardArray));
-        squares.forEach(square => console.log(square));
         function updateBoardArray(e){ // update the array based on data-index
+            if(state === 3) return; // exit if game has ended;
             if(e.target.getAttribute('data-index') === null) return; // exit if not square click
-            
-            board[e.target.getAttribute('data-index')] = 'O';
-            e.target.innerHTML = 'O';
+            if(board[e.target.getAttribute('data-index')] != ' ') return; // exit if marker already placed
+            board[e.target.getAttribute('data-index')] = (state === 1)?'O':'X';
+            e.target.innerHTML = (state === 1)?'O':'X';
+            state = (state === 1)?2:1;
+            checkWin();
+        }
+        function checkWin(){
+            for(let i=0; i<winningLines.length; i++){
+                let markersOnLine = '';
+                for(let j=0; j<3; j++){
+                    let line = winningLines[i];
+                    let index = parseInt(line.charAt(j));
+                    markersOnLine += board[index];
+                }
+                if(markersOnLine === 'OOO'){
+                    alert(`${player1.getName()} has won!`);
+                    state = 3;
+                    return;
+                }
+                else if(markersOnLine === 'XXX') {
+                    alert(`${player2.getName()} has won!`);
+                    state = 3;
+                    return;
+                }
+            }
         }
     };
 
@@ -42,10 +62,10 @@ const Gameboard = (() => {
 
     })();
 
-    return {renderBoard,board};
+    return {};
 })();
 
-// player object should have private names.
+
 const Player = (name, symbol) => {
     const getName = () => name;
     const getSymbol = () => symbol;
@@ -55,5 +75,6 @@ const Player = (name, symbol) => {
 
 
 let player1_name = prompt('Player 1 Name: ', 'Bob');
-let player2_name = prompt('Player 2 Name:', 'Bob');
-let player1 = Player()
+let player2_name = prompt('Player 2 Name:', 'Jeff');
+let player1 = Player(player1_name, 'O');
+let player2 = Player(player2_name, 'X');
