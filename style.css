@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    margin:0;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    background-color: thistle;
+}
+
+.square{
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+    border: 1px solid black;
+    margin: 0px;
+    text-align: center;
+    background-color: rgb(204, 204, 204);
+    font-family: sans-serif;
+    font-size: 30px;
+    
+}
+
+.square:hover{
+    background-color: rgb(180, 180, 180);
+}
+
+#board{
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    display:flex;
+    height: 310px;
+    width: 310px;
+    background-color: rgb(0, 0, 0);
+    justify-content: space-around;
+    align-items: center;
+}
